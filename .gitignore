@@ -1,3 +1,4 @@
 .idea
 app/migrations
 __pycache__
+app/.env

@@ -9,6 +9,12 @@ ENV PYTHONPATH "${PYTHONPATH}:/app"
 COPY . /app
 RUN pip3 install --no-cache-dir -r requirements.txt
 
+# init cmd
+#CMD ["sh", "-c", "flask db init \
+#    && flask db migrate \
+#    && flask db upgrade \
+#    && gunicorn --bind 0.0.0.0:5050 app:app"]
+
 CMD ["sh", "-c", "flask db migrate \
     && flask db upgrade \
     && gunicorn --bind 0.0.0.0:5050 app:app"]
