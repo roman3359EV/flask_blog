@@ -15,6 +15,7 @@ services:
       - '5050'
     depends_on:
       - postgresql
+      - redis
     volumes:
       - ./app:/app
       - static_volume:/app/blog/static
@@ -67,7 +68,17 @@ services:
     ports:
       - "5433:5432"
 
+  redis:
+    container_name: blog_redis
+    restart: always
+    image: redis
+    volumes:
+      - cache:/data
+    ports:
+      - '6379:6379'
+
 volumes:
   postgresql:
   postgresql_testing:
   static_volume:
+  cache:

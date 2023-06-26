@@ -1,9 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import and_
 from flask_login import UserMixin
+from flask_caching import Cache
+from sqlalchemy import and_, event
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
+cache = Cache()
 
 
 class User(db.Model, UserMixin):
@@ -38,6 +40,12 @@ class User(db.Model, UserMixin):
             return f"0 р."
 
         return f"{user.subscribe.balance} р."
+
+
+@event.listens_for(User, 'before_insert')
+def on_create_user(mapper, connection, target):
+    target.role_id = Role.ROLE_USER
+    target.active = True
 
 
 class Role(db.Model):
@@ -105,6 +113,11 @@ class Article(db.Model):
 
     def __repr__(self):
         return f"Article {self.name}"
+
+
+@event.listens_for(Article, 'before_insert')
+def on_create_article(mapper, connection, target):
+    cache.clear()
 
 
 class Access(db.Model):

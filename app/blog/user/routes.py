@@ -46,8 +46,8 @@ def registration() -> str|Response:
             name=name,
             login=user_login,
             password=generate_password_hash(password),
-            role_id=Role.ROLE_USER,
-            active=True
+            # role_id=Role.ROLE_USER,
+            # active=True
         )
         db.session.add(new_user)
         db.session.commit()

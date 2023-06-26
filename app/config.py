@@ -17,6 +17,12 @@ class Config(object):
     # SQLALCHEMY_DATABASE_URI_ASYNC = 'postgresql+asyncpg://user:pass@postgresql/flask_blog'
     # SQLALCHEMY_DATABASE_URI_ASYNC = 'postgresql+asyncpg://user:pass@localhost/flask_blog'
     SCHEDULER_API_ENABLED = True
+    CACHE_TYPE = env.get('CACHE_TYPE', 'NullCache')
+    CACHE_KEY_PREFIX = env.get('CACHE_KEY_PREFIX', 'cache')
+    CACHE_REDIS_HOST = env.get('CACHE_REDIS_HOST', '')
+    CACHE_REDIS_PORT = env.get('CACHE_REDIS_PORT', 6379)
+    CACHE_REDIS_URL = env.get('CACHE_REDIS_URL', '')
+    CACHE_DEFAULT_TIMEOUT = env.get('CACHE_DEFAULT_TIMEOUT', 3600)
 
 
 class TestingConfig(Config):
@@ -30,6 +36,7 @@ class TestingConfig(Config):
     # SQLALCHEMY_DATABASE_URI_ASYNC = 'postgresql+asyncpg://user:pass@postgresql_testing/flask_blog_testing'
     SQLALCHEMY_DATABASE_URI_ASYNC = 'postgresql+asyncpg://user:pass@localhost:5433/flask_blog_testing'
     SCHEDULER_API_ENABLED = False
+    CACHE_TYPE = 'NullCache'
 
 
 class DevelopConfig(Config):

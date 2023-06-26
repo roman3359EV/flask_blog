@@ -1,18 +1,22 @@
 from flask import render_template, Response, request
 from flask_login import current_user
 from . import article_routes
-from ..models import User, Category, Article, Access, Tag
+from ..models import User, Category, Article, Access, Tag, cache
 
 
 @article_routes.route('/articles', methods=['GET'])
-def articles() -> str|Response:
+def articles() -> str | Response:
     dict_user = {
         'name': current_user.name if current_user.is_authenticated else '',
         'login': current_user.login if current_user.is_authenticated else '',
         'balance': User.get_balance(current_user),
     }
 
-    categories_all = Category.query.all()
+    if cache.has('categories_all'):
+        categories_all = cache.get('categories_all')
+    else:
+        categories_all = Category.query.all()
+        cache.set('categories_all', categories_all)
 
     return render_template('articles.html', user=dict_user, categories=categories_all)
 
@@ -26,13 +30,18 @@ def category(category_id: int) -> str:
     }
 
     page = int(request.args.get('page')) if request.args.get('page') else 1
-
     category_current = Category.query.filter_by(id=category_id).first()
-    articles_all = Article\
-        .query\
-        .filter_by(category_id=category_id)\
-        .order_by(Article.id.asc())\
-        .paginate(page=page, per_page=Article.PER_PAGE)
+    cache_index = f"articles_all_${category_current}"
+
+    if cache.has(cache_index):
+        articles_all = cache.get(cache_index)
+    else:
+        articles_all = Article \
+            .query \
+            .filter_by(category_id=category_id) \
+            .order_by(Article.id.asc()) \
+            .paginate(page=page, per_page=Article.PER_PAGE)
+        cache.set(cache_index, articles_all)
 
     return render_template('category.html', user=dict_user, category=category_current, articles=articles_all)
 
@@ -45,7 +54,11 @@ def tags() -> str:
         'balance': User.get_balance(current_user),
     }
 
-    tags_all = Tag.query.all()
+    if cache.has('tags_all'):
+        tags_all = cache.get('tags_all')
+    else:
+        tags_all = Tag.query.all()
+        cache.set('tags_all', tags_all)
 
     return render_template('tags.html', user=dict_user, tags=tags_all)
 
@@ -58,7 +71,13 @@ def tag(alias: str) -> str:
         'balance': User.get_balance(current_user),
     }
 
-    tag_current = Tag.query.filter_by(alias=alias).first()
+    cache_index = f"tag_${alias}"
+
+    if cache.has(cache_index):
+        tag_current = cache.get(cache_index)
+    else:
+        tag_current = Tag.query.filter_by(alias=alias).first()
+        cache.set(cache_index, tag_current)
 
     return render_template('tag.html', user=dict_user, tag=tag_current)
 
