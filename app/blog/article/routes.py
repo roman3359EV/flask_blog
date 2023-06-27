@@ -31,17 +31,12 @@ def category(category_id: int) -> str:
 
     page = int(request.args.get('page')) if request.args.get('page') else 1
     category_current = Category.query.filter_by(id=category_id).first()
-    cache_index = f"articles_all_${category_current}"
 
-    if cache.has(cache_index):
-        articles_all = cache.get(cache_index)
-    else:
-        articles_all = Article \
-            .query \
-            .filter_by(category_id=category_id) \
-            .order_by(Article.id.asc()) \
-            .paginate(page=page, per_page=Article.PER_PAGE)
-        cache.set(cache_index, articles_all)
+    articles_all = Article \
+        .query \
+        .filter_by(category_id=category_id) \
+        .order_by(Article.id.asc()) \
+        .paginate(page=page, per_page=Article.PER_PAGE)
 
     return render_template('category.html', user=dict_user, category=category_current, articles=articles_all)
 
@@ -71,13 +66,7 @@ def tag(alias: str) -> str:
         'balance': User.get_balance(current_user),
     }
 
-    cache_index = f"tag_${alias}"
-
-    if cache.has(cache_index):
-        tag_current = cache.get(cache_index)
-    else:
-        tag_current = Tag.query.filter_by(alias=alias).first()
-        cache.set(cache_index, tag_current)
+    tag_current = Tag.query.filter_by(alias=alias).first()
 
     return render_template('tag.html', user=dict_user, tag=tag_current)
 
