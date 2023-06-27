@@ -1,7 +1,20 @@
+from functools import wraps
+from datetime import datetime
 from flask import render_template, Response, request
 from flask_login import current_user
 from . import article_routes
 from ..models import User, Category, Article, Access, Tag, cache
+
+
+def logging_article(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        with open('/app/demo.txt', 'a') as f:
+            d = dict(**kwargs)
+            f.write(f"open article - {d.get('article_id')}, time - {datetime.now():%d.%m.%Y %H:%M:%S}\n")
+        result = func(*args, **kwargs)
+        return result
+    return wrapper
 
 
 @article_routes.route('/articles', methods=['GET'])
@@ -72,6 +85,7 @@ def tag(alias: str) -> str:
 
 
 @article_routes.route('/article/<article_id>', methods=['GET'])
+@logging_article
 def article(article_id: int) -> str:
     current_article = Article.query \
         .filter_by(id=article_id) \

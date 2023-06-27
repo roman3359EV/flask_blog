@@ -11,6 +11,6 @@ migrate = Migrate(app, db)
 cache.init_app(app)
 
 # TODO: CI/CD - docker swarm, kubernetes, health check in docker
-# TODO: main page, search, websocket, kafka queue, clickhouse for log, middleware
+# TODO: main page, search, websocket, kafka queue, clickhouse for log
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5050)
