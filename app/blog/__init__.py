@@ -18,6 +18,8 @@ def create_app(config_class=None):
     login_manager = LoginManager()
     login_manager.init_app(app)
 
+    from . import events
+
     @login_manager.user_loader
     def load_user(user_id: int) -> User:
         return db.session.get(User, int(user_id))

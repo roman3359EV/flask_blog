@@ -15,7 +15,7 @@ scheduler.init_app(app)
 
 def first_job():
     with app.app_context():
-        with open('demo.txt', 'a') as f:
+        with open('log.txt', 'a') as f:
             pass
             # f.write("tick \n")
             # f.write(f"{User.query.first().name} \n")

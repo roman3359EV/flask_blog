@@ -3,6 +3,7 @@ from flask import render_template, request, flash, redirect, url_for, Response
 from flask_login import login_required, current_user
 from . import subscribe_routes
 from ..models import User, Subscribe, Access, db
+from ..events import backend_my_private_event
 
 
 @subscribe_routes.route('/payment', methods=['GET', 'POST'])
@@ -36,9 +37,11 @@ def payment() -> str:
                 'balance': User.get_balance(current_user)
             })
 
+            backend_my_private_event('payment success', f"private_room_{current_user.login}")
             flash('Your transaction is success')
             return render_template('payment.html', user=dict_user)
         else:
+            backend_my_private_event('payment reject', f"private_room_{current_user.login}")
             flash('Your transaction is reject')
             return render_template('payment.html', user=dict_user)
 
@@ -63,8 +66,10 @@ def paid() -> Response:
         db.session.add(access)
         db.session.commit()
 
+        backend_my_private_event(f"access granted to article {article_id}", f"private_room_{current_user.login}")
         flash('Access granted')
     else:
+        backend_my_private_event(f"access not granted to article {article_id}", f"private_room_{current_user.login}")
         flash('Access not granted')
 
     return redirect(url_for('articles.article', article_id=article_id))

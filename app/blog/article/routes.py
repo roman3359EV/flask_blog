@@ -4,14 +4,16 @@ from flask import render_template, Response, request
 from flask_login import current_user
 from . import article_routes
 from ..models import User, Category, Article, Access, Tag, cache
+from ..events import backend_my_event
 
 
 def logging_article(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        with open('/app/demo.txt', 'a') as f:
-            d = dict(**kwargs)
-            f.write(f"open article - {d.get('article_id')}, time - {datetime.now():%d.%m.%Y %H:%M:%S}\n")
+        d = dict(**kwargs)
+        # with open('/app/log.txt', 'a') as f:
+        #    f.write(f"open article - {d.get('article_id')}, time - {datetime.now():%d.%m.%Y %H:%M:%S}\n")
+        backend_my_event(f"read article {d.get('article_id')}")
         result = func(*args, **kwargs)
         return result
     return wrapper
@@ -27,9 +29,11 @@ def articles() -> str | Response:
 
     if cache.has('categories_all'):
         categories_all = cache.get('categories_all')
+        backend_my_event(f"data from cache")
     else:
         categories_all = Category.query.all()
         cache.set('categories_all', categories_all)
+        backend_my_event(f"data from db")
 
     return render_template('articles.html', user=dict_user, categories=categories_all)
 
@@ -64,9 +68,11 @@ def tags() -> str:
 
     if cache.has('tags_all'):
         tags_all = cache.get('tags_all')
+        backend_my_event(f"data from cache")
     else:
         tags_all = Tag.query.all()
         cache.set('tags_all', tags_all)
+        backend_my_event(f"data from db")
 
     return render_template('tags.html', user=dict_user, tags=tags_all)
 
