@@ -44,7 +44,7 @@ jobs:
       run: |
         pytest
 
-  Build_and_Push:
+  Build_Push:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
