@@ -13,9 +13,9 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_DB: flask_blog_testing
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: pass
+          POSTGRES_DB: ${{secrets.TESTING_DB_NAME}}
+          POSTGRES_USER: ${{secrets.TESTING_DB_USER}}
+          POSTGRES_PASSWORD: ${{secrets.TESTING_DB_PASSWORD}}
         ports:
           - 5433:5432
         options: >-
