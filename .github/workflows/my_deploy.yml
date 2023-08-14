@@ -76,7 +76,8 @@ jobs:
           key: ${{ vars.SERVER_KEY }}
           port: ${{ vars.SERVER_PORT }}
           script: |
-            docker-compose -f docker-compose.prod.yml -p prod down
-            docker-compose -f docker-compose.prod.yml -p prod pull
-            docker-compose -f docker-compose.prod.yml -p prod up -d
+            whoami
+    #        docker-compose -f docker-compose.prod.yml -p prod down
+    #        docker-compose -f docker-compose.prod.yml -p prod pull
+    #        docker-compose -f docker-compose.prod.yml -p prod up -d
 
