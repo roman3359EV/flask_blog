@@ -65,7 +65,7 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask_blog:latest
 
   deploy:
-    # needs: [build_and_push]
+    needs: [build_and_push]
     runs-on: ubuntu-latest
     steps:
       - name: Run deploy
