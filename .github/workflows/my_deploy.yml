@@ -59,7 +59,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
-        context: .
-        file: docker/Dockerfile
+        context: app
+        file: ../docker/Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask_blog:latest
