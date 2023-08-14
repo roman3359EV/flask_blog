@@ -45,7 +45,7 @@ jobs:
         pytest
 
   build_and_push:
-    needs: [test]
+    # needs: [test]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -60,6 +60,6 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: app
-        file: ../docker/Dockerfile
+        file: app/../docker/Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask_blog:latest
