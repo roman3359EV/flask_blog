@@ -71,10 +71,10 @@ jobs:
       - name: Run deploy
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ vars.SERVER_HOST }}
-          username: ${{ vars.SERVER_USERNAME }}
-          key: ${{ vars.SERVER_KEY }}
-          port: ${{ vars.SERVER_PORT }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
           script: |
             ls
             whoami
