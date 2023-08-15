@@ -55,19 +55,6 @@ services:
     ports:
       - "5432:5432"
 
-  postgresql_testing:
-    container_name: blog_db_testing
-    restart: always
-    image: postgres:15.1-alpine
-    environment:
-      - POSTGRES_USER=${TESTING_DB_USER}
-      - POSTGRES_PASSWORD=${TESTING_DB_PASSWORD}
-      - POSTGRES_DB=${TESTING_DB_NAME}
-    volumes:
-      - postgresql_testing:/var/lib/postgresql/data
-    ports:
-      - "5433:5432"
-
   redis:
     container_name: blog_redis
     restart: always
@@ -79,6 +66,5 @@ services:
 
 volumes:
   postgresql:
-  postgresql_testing:
   static_volume:
   cache:

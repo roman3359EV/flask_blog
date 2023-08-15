@@ -3,3 +3,4 @@ app/migrations
 app/test/migrations
 __pycache__
 app/.env
+app/.env.production
