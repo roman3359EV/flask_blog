@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   web:
@@ -23,7 +23,7 @@ services:
   scheduler:
     container_name: blog_scheduler
     image: blog_web
-    entrypoint: "python3 scheduler.py"
+    entrypoint: 'python3 scheduler.py'
     volumes:
       - ./app:/app
       - static_volume:/app/blog/static
@@ -53,7 +53,7 @@ services:
     volumes:
       - postgresql:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - '5432:5432'
 
   postgresql_testing:
     container_name: blog_db_testing
@@ -66,7 +66,7 @@ services:
     volumes:
       - postgresql_testing:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - '5433:5432'
 
   redis:
     container_name: blog_redis
