@@ -76,9 +76,10 @@ jobs:
           key: ${{ vars.SERVER_KEY }}
           port: ${{ vars.SERVER_PORT }}
           script: |
-            touch app/.env
-            echo "${{ secrets.ENV_FILE }}" > app/.env
-            cat app/.env
+            pwd
+            touch flask_blog/app/.env
+            echo "${{ vars.ENV_FILE }}" > flask_blog/app/.env
+            cat flask_blog/app/.env
     #        docker-compose -f docker-compose.prod.yml down
     #        docker-compose -f docker-compose.prod.yml pull
     #        docker-compose -f docker-compose.prod.yml up -d
