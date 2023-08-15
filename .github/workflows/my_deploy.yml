@@ -78,7 +78,7 @@ jobs:
           script: |
             touch flask_blog/app/.env
             echo "${{ vars.ENV_FILE }}" > flask_blog/app/.env
-            docker-compose -f docker-compose.prod.yml down
-            docker-compose -f docker-compose.prod.yml pull
-            docker-compose -f docker-compose.prod.yml up -d
+            docker-compose -f flask_blog/docker-compose.prod.yml down
+            docker-compose -f flask_blog/docker-compose.prod.yml pull
+            docker-compose -f flask_blog/docker-compose.prod.yml up -d
 
