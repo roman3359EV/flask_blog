@@ -65,7 +65,7 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask_blog:latest
 
   deploy:
-    needs: [test,build_and_push]
+    needs: [build_and_push]
     runs-on: ubuntu-latest
     steps:
       - name: Run deploy
@@ -77,9 +77,9 @@ jobs:
           port: ${{ vars.SERVER_PORT }}
           script: |
             touch flask_blog/app/.env
-            echo "${{ vars.ENV_FILE }}" > flask_blog/app/.env
+            echo '${{ vars.ENV_FILE }}' > flask_blog/app/.env
             touch flask_blog/docker-compose.production.yml
-            echo "${{ vars.DOCKER_COMPOSE_FILE }}" > flask_blog/docker-compose.production.yml
+            echo '${{ vars.DOCKER_COMPOSE_FILE }}' > flask_blog/docker-compose.production.yml
             docker-compose -f flask_blog/docker-compose.production.yml down
             docker-compose -f flask_blog/docker-compose.production.yml pull
             docker-compose -f flask_blog/docker-compose.production.yml up -d
