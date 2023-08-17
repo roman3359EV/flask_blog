@@ -13,7 +13,7 @@ cache.init_app(app)
 socketio.init_app(app)
 
 
-# TODO: CI/CD - docker swarm, kubernetes, health check in docker
+# TODO: CI/CD - docker, docker swarm, kubernetes, health check in docker
 # TODO: main page, search, kafka queue, clickhouse for log
 if __name__ == '__main__':
     socketio.run(app, debug=True, host='0.0.0.0', port=5050)
