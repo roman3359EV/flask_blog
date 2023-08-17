@@ -68,3 +68,4 @@ volumes:
   postgresql:
   static_volume:
   cache:
+
