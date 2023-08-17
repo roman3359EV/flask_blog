@@ -80,7 +80,7 @@ jobs:
             echo '${{ vars.ENV_FILE }}' > flask_blog/app/.env
             touch flask_blog/docker-compose.production.yml
             echo '${{ vars.DOCKER_COMPOSE_FILE }}' > flask_blog/docker-compose.production.yml
-            docker-compose -f flask_blog/docker-compose.production.yml down
-            docker-compose -f flask_blog/docker-compose.production.yml pull
-            docker-compose -f flask_blog/docker-compose.production.yml up -d
+            docker-compose --file flask_blog/docker-compose.production.yml --env-file flask_blog/app/.env down
+            docker-compose --file flask_blog/docker-compose.production.yml --env-file flask_blog/app/.env pull
+            docker-compose --file flask_blog/docker-compose.production.yml --env-file flask_blog/app/.env up -d
 
