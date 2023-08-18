@@ -12,6 +12,7 @@ services:
       - redis
     volumes:
       - ./app/.env:/app/.env
+      - ./app/migrations:/app/migrations
 
   scheduler:
     container_name: blog_scheduler
@@ -22,6 +23,7 @@ services:
       - web
     volumes:
       - ./app/.env:/app/.env
+      - ./app/migrations:/app/migrations
 
   nginx:
     container_name: blog_nginx
