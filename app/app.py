@@ -6,6 +6,8 @@ from blog.models import db, cache
 from blog.events import socketio
 
 app = create_app(DevelopConfig)
+print(DevelopConfig)
+exit(1)
 csrf = CSRFProtect(app)
 db.init_app(app)
 migrate = Migrate(app, db)
