@@ -10,6 +10,8 @@ services:
     depends_on:
       - postgresql
       - redis
+    volumes:
+      - ./app/.env:/app/.env
 
   scheduler:
     container_name: blog_scheduler
@@ -18,6 +20,8 @@ services:
     restart: always
     depends_on:
       - web
+    volumes:
+      - ./app/.env:/app/.env
 
   nginx:
     container_name: blog_nginx
