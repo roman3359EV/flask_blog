@@ -10,17 +10,11 @@ services:
     depends_on:
       - postgresql
       - redis
-    volumes:
-      - ./app:/app
-      - static_volume:/app/blog/static
 
   scheduler:
     container_name: blog_scheduler
     image: romano9533/flask_blog:latest
     entrypoint: "python3 scheduler.py"
-    volumes:
-      - ./app:/app
-      - static_volume:/app/blog/static
     restart: always
     depends_on:
       - web
@@ -60,5 +54,4 @@ services:
 
 volumes:
   postgresql:
-  static_volume:
   cache:
