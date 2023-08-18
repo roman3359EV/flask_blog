@@ -6,7 +6,8 @@ from blog.models import db, cache
 from blog.events import socketio
 
 app = create_app(DevelopConfig)
-print(DevelopConfig)
+print(DevelopConfig.SQLALCHEMY_DATABASE_URI_ASYNC)
+print(DevelopConfig.SQLALCHEMY_DATABASE_URI)
 exit(1)
 csrf = CSRFProtect(app)
 db.init_app(app)
